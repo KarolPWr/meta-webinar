@@ -1,0 +1,20 @@
+#include <tunables/global>
+
+/usr/bin/vuln-server {
+  #include <abstractions/base>
+  #include <abstractions/python>
+  #include <abstractions/nameservice>
+
+  # Allow script read and interpreter execution
+  /usr/bin/vuln-server r,
+  /usr/bin/env ix,
+  /usr/bin/python3* ix,
+
+  # Allow normal function, deny shadow file
+  /etc/hostname r,
+  deny /etc/shadow r,
+
+  # Allow network
+  network inet stream,
+  network inet6 stream,
+}
